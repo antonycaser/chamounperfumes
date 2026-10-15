@@ -42,17 +42,21 @@ button,input{font:inherit;color:inherit}
 .bar-row{display:flex;align-items:center;gap:8px}
 .seg{display:flex;gap:4px;background:var(--chip);border-radius:999px;padding:4px;flex:1 1 auto;min-width:0;max-width:440px}
 .seg button{flex:1 1 0;min-width:0;border:0;background:none;border-radius:999px;padding:7px 10px;min-height:36px;font-size:13px;font-weight:600;color:var(--soft);cursor:pointer;white-space:nowrap}
-.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff;box-shadow:0 2px 8px -2px rgba(0,0,0,.35)}
 .seg .c{font-weight:500;color:var(--faint);margin-left:3px;font-size:11.5px}
+.seg button[aria-pressed="true"] .c{color:rgba(255,255,255,.7)}
 .icon-btn{flex:none;width:44px;height:44px;border-radius:999px;border:0;background:var(--chip);display:grid;place-items:center;cursor:pointer}
 .icon-btn[aria-expanded="true"]{background:var(--ink);color:#fff}
 .icon-btn svg{width:18px;height:18px}
 .search input{width:100%;min-height:42px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:9px 14px;font-size:14px}
 
+main section{scroll-margin-top:72px}
 main.wrap{padding-block:18px 40px;display:flex;flex-direction:column;gap:26px}
-.sec-head{display:flex;align-items:baseline;gap:8px;margin:0 2px 12px}
-.sec-head h2{margin:0;font-size:20px;font-weight:800;letter-spacing:-.02em}
-.sec-head span{font-size:13px;font-weight:600;color:var(--faint)}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;background:var(--ink);color:#fff;border-radius:18px;padding:18px 18px 16px}
+.sec-head .t{display:flex;flex-direction:column;gap:4px;min-width:0}
+.sec-head .eb{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.sec-head h2{margin:0;font-size:clamp(26px,7.4vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1;color:#fff;text-transform:uppercase}
+.sec-head .n{flex:none;font-size:12.5px;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border-radius:999px;padding:7px 12px;white-space:nowrap}
 
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:clamp(10.5px,2.9vw,13px)}
 @media (min-width:640px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}}
@@ -148,7 +152,7 @@ footer img{width:120px;height:auto;opacity:.75}
       const ps = D.produtos.filter((p) => p.secao === s && words.every((w) => norm([p.marca, p.nome, p.tipo, p.ml + 'ml'].join(' ')).includes(w)));
       if (!ps.length) continue; shown += ps.length;
       const section = el('section'); section.setAttribute('aria-label', s);
-      const head = el('div', 'sec-head'); head.append(el('h2', '', s), el('span', 'num', String(ps.length)));
+      const head = el('div', 'sec-head'); const t = el('div', 't'); t.append(el('span', 'eb', 'Perfumes'), el('h2', '', s)); head.append(t, el('span', 'n num', ps.length + (ps.length === 1 ? ' perfume' : ' perfumes')));
       const grid = el('div', 'grid'); ps.forEach((p) => grid.append(card(p)));
       section.append(head, grid); main.append(section);
     }
